@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-body">
+    <div class="page-glow page-glow-left"></div>
+    <div class="page-glow page-glow-right"></div>
+    <div class="spark-layer" aria-hidden="true">
+        <span class="spark spark-a"></span>
+        <span class="spark spark-b"></span>
+        <span class="spark spark-c"></span>
+        <span class="spark spark-d"></span>
+    </div>
+    <header class="page-header dashboard-header">
+        <div>
+            <span class="brand">Resume Builder</span>
+            <p>Pick a style, launch a new resume, and revisit your history.</p>
+        </div>
+        <div class="header-actions">
+            <button type="button" id="themeToggle" class="button button-secondary">Dark Mode</button>
+            <a href="{{ url_for('toolkit') }}" class="button button-secondary">Toolkit</a>
+            <a href="{{ url_for('tips') }}" class="button button-secondary">Tips</a>
+            <a href="{{ url_for('create') }}" class="button button-primary">Create Resume</a>
+            <a href="{{ url_for('logout') }}" class="button button-secondary">Logout</a>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-banner flash-{{ category }} visible">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <section class="panel dashboard-card">
+            <div class="panel-header">
+                <h1>Choose your style</h1>
+                <p>Select one of the premium layouts and colors to shape your next resume.</p>
+            </div>
+            <form method="POST" class="dashboard-form">
+                <div class="template-grid">
+                    <label class="template-option {% if selected_style.template == '1' %}selected{% endif %}">
+                        <input type="radio" name="template" value="1" {% if selected_style.template == '1' %}checked{% endif %}>
+                        <span class="option-title">Classic</span>
+                        <span class="option-copy">Balanced structure with polished sections.</span>
+                    </label>
+                    <label class="template-option {% if selected_style.template == '2' %}selected{% endif %}">
+                        <input type="radio" name="template" value="2" {% if selected_style.template == '2' %}checked{% endif %}>
+                        <span class="option-title">Modern</span>
+                        <span class="option-copy">Clean and minimal for elegant branding.</span>
+                    </label>
+                    <label class="template-option {% if selected_style.template == '3' %}selected{% endif %}">
+                        <input type="radio" name="template" value="3" {% if selected_style.template == '3' %}checked{% endif %}>
+                        <span class="option-title">Creative</span>
+                        <span class="option-copy">Bold layouts and standout visual energy.</span>
+                    </label>
+                </div>
+                <div class="palette-row">
+                    <label><input type="radio" name="accent" value="blue" {% if selected_style.accent == 'blue' %}checked{% endif %}> Blue</label>
+                    <label><input type="radio" name="accent" value="purple" {% if selected_style.accent == 'purple' %}checked{% endif %}> Purple</label>
+                    <label><input type="radio" name="accent" value="green" {% if selected_style.accent == 'green' %}checked{% endif %}> Green</label>
+                    <label><input type="radio" name="accent" value="orange" {% if selected_style.accent == 'orange' %}checked{% endif %}> Orange</label>
+                </div>
+                <button type="submit" class="button button-primary">Apply style</button>
+            </form>
+        </section>
+
+        <section class="panel dashboard-card">
+            <div class="panel-header">
+                <h2>Recent resumes</h2>
+                <p>Your latest created resumes are ready to reopen.</p>
+            </div>
+            {% if resumes %}
+            <div class="history-list">
+                {% for resume in resumes[:3] %}
+                <article class="history-card">
+                    <div>
+                        <h3>{{ resume.name }}</h3>
+                        <p>{{ resume.role or 'Resume export' }}</p>
+                    </div>
+                    <div class="history-actions">
+                        <a class="button button-secondary" href="{{ url_for('download_resume', record_id=resume.id) }}">Download</a>
+                        <a class="button button-secondary" href="{{ url_for('edit_resume', record_id=resume.id) }}">Edit</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>No resumes yet</h3>
+                <p>Start generating your first resume and it will appear here.</p>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

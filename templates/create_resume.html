@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Resume - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-body">
+    <div class="page-glow page-glow-left"></div>
+    <div class="page-glow page-glow-right"></div>
+    <div class="spark-layer" aria-hidden="true">
+        <span class="spark spark-a"></span>
+        <span class="spark spark-b"></span>
+        <span class="spark spark-c"></span>
+        <span class="spark spark-d"></span>
+    </div>
+    <header class="page-header">
+        <div class="brand-block">
+            <div>
+                <span class="brand">Resume Builder</span>
+                <p>Welcome back, {{ user.name }}.</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button type="button" id="themeToggle" class="button button-secondary">Dark Mode</button>
+            <a href="{{ url_for('logout') }}" class="button button-secondary">Logout</a>
+        </div>
+    </header>
+
+    {% if welcome_message %}
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card">
+            <i class="fas fa-magic"></i>
+            <h2>{{ welcome_message }}</h2>
+            <p>Your workspace is ready. Pick a style and start crafting your resume.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <main class="page-shell">
+        <section class="panel panel-form">
+            <div class="panel-header">
+                <h1>Build your resume</h1>
+                <p>Fill in the form below and download a professional resume instantly.</p>
+                <div class="template-selector">
+                    <span>Select resume style:</span>
+                    <div class="template-buttons">
+                        <button type="button" class="template-button active" data-template="1">Classic</button>
+                        <button type="button" class="template-button" data-template="2">Modern</button>
+                        <button type="button" class="template-button" data-template="3">Creative</button>
+                    </div>
+                </div>
+                <div class="style-controls">
+                    <label for="accent_color">Accent color</label>
+                    <select id="accent_color" name="accent_color">
+                        <option value="blue" {% if resume_data and resume_data.accent_color == 'blue' %}selected{% endif %}>Blue</option>
+                        <option value="purple" {% if resume_data and resume_data.accent_color == 'purple' %}selected{% endif %}>Purple</option>
+                        <option value="green" {% if resume_data and resume_data.accent_color == 'green' %}selected{% endif %}>Green</option>
+                        <option value="orange" {% if resume_data and resume_data.accent_color == 'orange' %}selected{% endif %}>Orange</option>
+                    </select>
+                    <label class="checkbox-row"><input type="checkbox" id="show_photo" name="show_photo" {% if not resume_data or resume_data.show_photo %}checked{% endif %}> Show profile photo</label>
+                </div>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" id="resumeForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" value="{{ resume_data.name if resume_data else '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Target Role *</label>
+                        <input type="text" id="role" name="role" placeholder="e.g. Software Engineer" value="{{ resume_data.role if resume_data else '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" value="{{ resume_data.email if resume_data else '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" value="{{ resume_data.phone if resume_data else '' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience_level">Experience Level *</label>
+                        <select id="experience_level" name="experience_level" required>
+                            <option value="">Select level</option>
+                            <option value="Fresher">Fresher</option>
+                            <option value="Experienced">Experienced</option>
+                            <option value="Senior">Senior</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Profile Photo (optional)</label>
+                        <input type="file" id="photo" name="photo" accept="image/*">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="skills">Skills *</label>
+                        <textarea id="skills" name="skills" rows="4" placeholder="Java, Python, React, SQL" required>{{ resume_data.skills if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="education">Education *</label>
+                        <textarea id="education" name="education" rows="4" placeholder="B.Tech in Computer Science" required>{{ resume_data.education if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="experience">Experience *</label>
+                        <textarea id="experience" name="experience" rows="4" placeholder="2 years of experience in web development" required>{{ resume_data.experience if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="goal">Career Summary *</label>
+                        <textarea id="goal" name="goal" rows="4" placeholder="A quick learner with strong problem-solving skills." required>{{ resume_data.goal if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn</label>
+                        <input type="text" id="linkedin" name="linkedin" placeholder="linkedin.com/in/yourname" value="{{ resume_data.linkedin if resume_data else '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="portfolio">Portfolio</label>
+                        <input type="text" id="portfolio" name="portfolio" placeholder="yourportfolio.com" value="{{ resume_data.portfolio if resume_data else '' }}">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="certifications">Certifications</label>
+                        <textarea id="certifications" name="certifications" rows="3" placeholder="AWS Cloud Practitioner, Google UX Design">{{ resume_data.certifications if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="projects">Projects</label>
+                        <textarea id="projects" name="projects" rows="3" placeholder="Built a customer dashboard with React and Python">{{ resume_data.projects if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="languages">Languages</label>
+                        <textarea id="languages" name="languages" rows="2" placeholder="English, Hindi, Arabic">{{ resume_data.languages if resume_data else '' }}</textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="achievements">Achievements</label>
+                        <textarea id="achievements" name="achievements" rows="3" placeholder="Increased feature adoption by 25%">{{ resume_data.achievements if resume_data else '' }}</textarea>
+                    </div>
+                    <input type="hidden" id="template" name="template" value="{{ resume_data.template if resume_data else 1 }}">
+                    <div class="form-group">
+                        <label for="format">Download Format</label>
+                        <select id="format" name="format" required>
+                            <option value="docx" {% if resume_data and resume_data.format == 'docx' %}selected{% endif %}>DOCX</option>
+                            <option value="pdf" {% if resume_data and resume_data.format == 'pdf' %}selected{% endif %}>PDF</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="panel-actions">
+                    <a href="{{ url_for('history') }}" class="button button-secondary"><i class="fas fa-history"></i> History</a>
+                    <a href="{{ url_for('toolkit') }}" class="button button-secondary"><i class="fas fa-toolbox"></i> Toolkit</a>
+                    <a href="{{ url_for('tips') }}" class="button button-secondary"><i class="fas fa-lightbulb"></i> Tips</a>
+                    <button type="reset" class="button button-secondary"><i class="fas fa-eraser"></i> Clear</button>
+                    <button type="submit" class="button button-primary"><i class="fas fa-download"></i> Export Resume</button>
+                </div>
+            </form>
+        </section>
+
+        <aside class="panel panel-preview">
+            <div class="panel-header">
+                <h2>Preview</h2>
+            </div>
+            <div id="previewCard" class="preview-card template-1">
+                <div id="preview_photo" class="preview-photo">Photo</div>
+                <h3 id="preview_name">Your Name</h3>
+                <span id="preview_role" class="preview-title">Professional Title</span>
+                <div class="preview-meta">
+                    <span id="preview_email">email@example.com</span>
+                    <span id="preview_phone">+1 (555) 000-0000</span>
+                </div>
+                <div class="preview-section">
+                    <strong>Summary</strong>
+                    <p id="preview_goal">A motivated professional ready to contribute to your team.</p>
+                </div>
+                <div class="preview-section">
+                    <strong>Skills</strong>
+                    <p id="preview_skills">Python, JavaScript, React</p>
+                </div>
+                <div class="preview-section">
+                    <strong>Education</strong>
+                    <p id="preview_education">Bachelor of Science in Computer Science</p>
+                </div>
+                <div class="preview-section">
+                    <strong>Experience</strong>
+                    <p id="preview_experience">Designed and delivered feature-rich web applications.</p>
+                </div>
+                <div class="preview-section">
+                    <strong>Highlights</strong>
+                    <p id="preview_linkedin">linkedin.com/in/yourname</p>
+                    <p id="preview_portfolio">yourportfolio.com</p>
+                    <p id="preview_certifications">AWS Cloud Practitioner</p>
+                    <p id="preview_projects">Built a customer dashboard with React and Python</p>
+                    <p id="preview_languages">English, Hindi</p>
+                    <p id="preview_achievements">Increased adoption by 25%</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <div id="exportOverlay" class="export-overlay" aria-hidden="true">
+        <div class="export-popup" role="dialog" aria-live="polite">
+            <div class="party-side party-left">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="party-side party-right">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="party-confetti">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <i class="fas fa-check-circle success-icon"></i>
+            <h3>RESUME SUCCESSFULLY DOWNLOADED</h3>
+            <p>START YOUR CAREER</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

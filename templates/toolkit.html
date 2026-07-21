@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Toolkit - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="page-header">
+        <div>
+            <span class="brand">Resume Builder</span>
+            <p>Career Toolkit for faster job applications.</p>
+        </div>
+        <div class="header-actions">
+            <a href="{{ url_for('dashboard') }}" class="button button-secondary">Dashboard</a>
+            <a href="{{ url_for('create') }}" class="button button-primary">Build Resume</a>
+        </div>
+    </header>
+
+    <main class="page-shell toolkit-shell">
+        <section class="panel">
+            <div class="panel-header">
+                <h1>Career Toolkit</h1>
+                <p>Helpful tools to polish your resume and stand out.</p>
+            </div>
+            <div class="toolkit-grid">
+                <article class="tool-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Quick Summary</h3>
+                    <p>Generate an executive-style summary in seconds.</p>
+                </article>
+                <article class="tool-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Impact Metrics</h3>
+                    <p>Turn responsibilities into measurable achievements.</p>
+                </article>
+                <article class="tool-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Cover Letter Helper</h3>
+                    <p>Draft a tailored opening line for each opportunity.</p>
+                </article>
+                <article class="tool-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Networking Prompt</h3>
+                    <p>Prepare a strong message for recruiters and mentors.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

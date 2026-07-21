@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Tips - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="page-header">
+        <div>
+            <span class="brand">Resume Builder</span>
+            <p>Resume Tips to improve your chances.</p>
+        </div>
+        <div class="header-actions">
+            <a href="{{ url_for('dashboard') }}" class="button button-secondary">Dashboard</a>
+            <a href="{{ url_for('create') }}" class="button button-primary">Build Resume</a>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="panel">
+            <div class="panel-header">
+                <h1>Resume Tips</h1>
+                <p>Small improvements that make a big difference.</p>
+            </div>
+            <div class="tips-list">
+                <article class="tip-item">
+                    <h3>Tailor every resume</h3>
+                    <p>Match your summary and skills to the role you are applying for.</p>
+                </article>
+                <article class="tip-item">
+                    <h3>Use action verbs</h3>
+                    <p>Words like built, led, launched, and improved make your experience stronger.</p>
+                </article>
+                <article class="tip-item">
+                    <h3>Quantify wins</h3>
+                    <p>Include numbers, percentages, and results whenever possible.</p>
+                </article>
+                <article class="tip-item">
+                    <h3>Keep formatting clean</h3>
+                    <p>Readable fonts, consistent spacing, and clear sections help recruiters scan faster.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

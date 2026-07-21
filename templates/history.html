@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume History - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="page-header">
+        <div class="brand-block">
+            <div>
+                <span class="brand">Resume Builder</span>
+                <p>Track and manage every resume you have generated.</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button type="button" id="themeToggle" class="button button-secondary">Dark Mode</button>
+            <a href="{{ url_for('create') }}" class="button button-secondary">Create</a>
+            <a href="{{ url_for('logout') }}" class="button button-secondary">Logout</a>
+        </div>
+    </header>
+
+    <main class="page-shell history-shell">
+        <section class="panel panel-form">
+            <div class="panel-header">
+                <h1>Resume history</h1>
+                <p>Review, modify, duplicate, and download your previous exports.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-banner flash-{{ category }} visible">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% if resumes %}
+            <div class="history-list">
+                {% for resume in resumes %}
+                <article class="history-card">
+                    <div>
+                        <h3>{{ resume.name }}</h3>
+                        <p><strong>Role:</strong> {{ resume.role or 'Not provided' }}</p>
+                        <p><strong>Format:</strong> {{ resume.format.upper() }} · <strong>Style:</strong> Template {{ resume.template }}</p>
+                        <p><strong>Created:</strong> {{ resume.created_at }}</p>
+                    </div>
+                    <div class="history-actions">
+                        <a class="button button-primary" href="{{ url_for('download_resume', record_id=resume.id) }}"><i class="fas fa-download"></i> Download</a>
+                        <a class="button button-secondary" href="{{ url_for('edit_resume', record_id=resume.id) }}"><i class="fas fa-edit"></i> Edit</a>
+                        <form method="POST" action="{{ url_for('delete_resume', record_id=resume.id) }}" onsubmit="return confirm('Delete this resume from your history?');">
+                            <button type="submit" class="button button-secondary"><i class="fas fa-trash"></i> Delete</button>
+                        </form>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>No resumes yet</h3>
+                <p>Create one from the builder and it will appear here for easy reuse.</p>
+                <a class="button button-primary" href="{{ url_for('create') }}">Start building</a>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

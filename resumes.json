@@ -1,0 +1,37 @@
+{
+  "3c6eea77": {
+    "id": "3c6eea77",
+    "user_email": "j@gmail.com",
+    "name": "J",
+    "role": "H",
+    "template": 3,
+    "accent_color": "blue",
+    "format": "docx",
+    "download_name": "J_Resume.docx",
+    "file_path": "C:\\Users\\dell\\Downloads\\whesley doc\\whesley doc\\GENAI_RESUME\\static\\uploads\\history\\jgmail.com\\J_20260716094958.docx",
+    "created_at": "2026-07-16 06:42:57",
+    "updated_at": "2026-07-16 09:49:58",
+    "data": {
+      "name": "J",
+      "email": "H@gmail.com",
+      "phone": "5",
+      "role": "H",
+      "summary": "Eager to learn H driven to prove technical capabilities, specialized in JJJJJJJJJJJJ. Seeking to ertyuio while maintaining high standards of excellence.",
+      "skills": "JJJJJJJJJJJJ",
+      "education": "HHJJ",
+      "experience": "JJJJJJJJ",
+      "goal": "ERTYUIO",
+      "linkedin": "XX",
+      "portfolio": "AA",
+      "certifications": "ER",
+      "projects": "CVBN",
+      "languages": "NMM",
+      "achievements": "KLHGV",
+      "photo": "C:\\Users\\dell\\Downloads\\whesley doc\\whesley doc\\GENAI_RESUME\\static\\uploads\\B01_001_v11.3mf.jpg",
+      "template": 3,
+      "accent_color": "blue",
+      "show_photo": false,
+      "format": "docx"
+    }
+  }
+}

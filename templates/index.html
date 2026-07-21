@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Resume Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+    <div class="auth-bg">
+        <span class="orb orb-one"></span>
+        <span class="orb orb-two"></span>
+        <span class="orb orb-three"></span>
+        <span class="spark spark-one"></span>
+        <span class="spark spark-two"></span>
+        <span class="spark spark-three"></span>
+        <div class="job-scene" aria-hidden="true">
+            <div class="applicant-icon"><i class="fas fa-user-tie"></i></div>
+            <div class="resume-card">
+                <i class="fas fa-file-alt"></i>
+                <span>Resume</span>
+            </div>
+            <div class="job-badge"><i class="fas fa-briefcase"></i> Applied</div>
+            <div class="motion-line"></div>
+            <span class="mini-tag tag-one"><i class="fas fa-check"></i> Skills</span>
+            <span class="mini-tag tag-two"><i class="fas fa-star"></i> Ready</span>
+            <span class="dot dot-one"></span>
+            <span class="dot dot-two"></span>
+            <span class="dot dot-three"></span>
+            <span class="pulse-ring"></span>
+            <span class="glow-line glow-line-one"></span>
+            <span class="glow-line glow-line-two"></span>
+            <span class="glow-line glow-line-three"></span>
+            <span class="floating-panel panel-one"></span>
+            <span class="floating-panel panel-two"></span>
+        </div>
+    </div>
+    <div class="auth-card auth-card-animated">
+        <div class="auth-ornament"><i class="fas fa-brain"></i></div>
+        <div class="auth-header">
+            <div>
+                <span class="brand">Resume Builder</span>
+                <p>Login to generate your professional resume.</p>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-banner flash-{{ category }} visible">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% if error %}
+        <div class="flash-banner flash-error visible">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="button button-primary">Login</button>
+        </form>
+
+        <div class="auth-footer">
+            <span>New here?</span>
+            <a href="{{ url_for('register') }}">Create an account</a>
+        </div>
+    </div>
+</body>
+</html>
