@@ -33,15 +33,14 @@ No verified application screenshots are currently available in the repository. T
 When you capture screenshots of the running application, add them to `docs/screenshots/` and update this section. Useful screenshots include:
 
 - Landing / login page
+ <img width="1361" height="684" alt="51" src="https://github.com/user-attachments/assets/c14d9fe9-abe1-4906-9d3d-8f6499986385" />
+
 - Resume editor with live preview and template controls
+ <img width="1274" height="637" alt="52" src="https://github.com/user-attachments/assets/6b62a0ea-9366-41d6-9f20-f87b7c4a68e3" />
+
 - Classic, Modern, and Creative resume examples
 - Resume history and dashboard
 
-Example Markdown once real screenshots are added:
-
-```md
-![Resume editor](docs/screenshots/resume-editor.png)
-```
 
 ## Getting Started
 
